@@ -1,11 +1,13 @@
 from browser import document, html  # type: ignore
 
+import data
+
 
 TOTAL_TIME = 15 * 60 + 90  # 15 min fight length.
 SCALE = 5
 PIXELS = TOTAL_TIME * SCALE
 STEP = 2 * SCALE
-START_POS = 40
+START_POS = 40 + 99
 
 COLORS = {
     'paladin': ('#F58CBA', '#FAC7DD'),
@@ -97,6 +99,7 @@ class Bar(html.DIV):
     def _content(self):
         duration_style = {
             'max-width': self.ability.duration,
+            'width': self.ability.duration,
             'background-color': self.ability.color_main,
         }
         duration = html.TD(self.ability.name, style=duration_style, Class='duration')
@@ -193,6 +196,7 @@ class BigBar(html.DIV):
         for i, bar in enumerate(self._bars):
             bar._left = self._bars[i - 1] if i > 0 else None
             bar._right = None if i == (bar_count - 1) else self._bars[i + 1]
+            print(bar, dir(bar))
             bar.bind('mousedown', bar.drag)
 
     def check(self):
@@ -236,13 +240,7 @@ class CheckBox(html.DIV):
 
 def add_options():
     options = document['options']
-    # for spec in specs:
-    #     name = spec.name
-    #     options <= html.INPUT(type='checkbox', name=name, id=name)
-    #     options <= html.LABEL(name, For=name)
-    #     options <= html.BR()
-    # options <= html.BR()
-    for ability in abilities:
+    for ability in data.abilities:
         options <= CheckBox(ability)
         # name = ability.name
         # checkbox = html.INPUT(type='checkbox', name=name, id=name, checked=ability.check)
@@ -254,6 +252,8 @@ def add_options():
 
 
 if __name__ == '__main__':
+    # import os
+    # print(os.getcwd())
 
     main = document['main']
 

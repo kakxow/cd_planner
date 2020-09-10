@@ -1,0 +1,9 @@
+<form id="main">
+	{% for spec in specs %}
+		{% set name = spec.name %}
+		<input type="checkbox" name={{name}} id={{name}}>
+		<label for={{name}}>{{name}}</label>
+		<br>
+	{% endfor %}
+	<input type="submit" name="submit" value="Next">
+</form>

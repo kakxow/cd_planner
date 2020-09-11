@@ -1,154 +1,20 @@
+{% from "macros.html" import timeline, bars, options %}
 <html>
 
 <head>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
 	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython.js') }}"></script>
-	<!--<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython_stdlib.js') }}"></script>-->
-	<style type="text/css">
-		.stripe-1 {
-		  color: white;
-		  background: repeating-linear-gradient(
-		  	90deg, white, white 40px, black 40px, black 41px)
-		}
-		.vl {
-			  border-left: 6px solid green;
-			  height: 500px;
-			}
-
-		thead, tr, th {
-			border: 1px solid black;
-			border-collapse: collapse;
-			table-layout: fixed;
-		}
-
-		.tooltip {
-		  position: relative;
-		  display: inline-block;
-		  border-bottom: 1px dotted black;
-		}
-		.tooltip .tooltiptext {
-		  visibility: hidden;
-		  width: 120px;
-		  background-color: #555;
-		  color: #fff;
-		  text-align: center;
-		  border-radius: 6px;
-		  padding: 5px 0;
-		  position: absolute;
-		  z-index: 1;
-		  top: 125%;
-		  left: 50%;
-		  margin-left: -60px;
-		  opacity: 0;
-		  transition: opacity 0.3s;
-		}
-		.tooltip .tooltiptext::after {
-		  content: "";
-		  position: absolute;
-		  bottom: 100%;
-		  left: 50%;
-		  margin-left: -5px;
-		  border-width: 5px;
-		  border-style: solid;
-		  border-color: #555 transparent transparent transparent;
-		}
-		.tooltip:hover .tooltiptext {
-		  visibility: visible;
-		  opacity: 1;
-		}
-
-		.timeline-ruler {
-		    padding-top: 20px;
-		    padding-left: 32px;
-		    white-space: nowrap;
-		    line-height: 1.4;
-		    font-size: 0;
-		}
-		.timeline-ruler-tick {
-		    position: relative;
-		    color: #000;
-		    border-left: 1px solid #000;
-		    display: inline-block;
-		    border-bottom: 1px solid #000;
-		    width: 4px;
-		}
-		.timeline-ruler-1second {
-		    height: 0px;
-		}
-		.timeline-ruler-5second {
-		    height: 4px;
-		}
-		.timeline-ruler-10second {
-		    height: 8px;
-		    font-size: 10;
-		}
-		.timeline-ruler-minute {
-		    height: 16px;
-		    font-size: 12;
-		}
-		.timeline-ruler-bang {
-		    height: 20px;
-		    color: red;
-		    font-size: 12;
-		}
-		.timeline-ruler-number {
-		    position: absolute;
-		    top: -18px;
-		    left: -11px;
-		}
-
-		.lower20 {
-			position: relative;
-			top: 20px;
-		}
-		.duration {
-			padding: 0px;
-		}
-		.ability-tbl {
-			table-layout: fixed;
-			border: 0px;
-			border-collapse: collapse;
-			table-layout: fixed;
-			padding: 0px;
-			white-space: nowrap;
-		}
-		.ability-bar {
-			cursor: move;
-			position: absolute;
-			padding: 0px;
-		}
-		.container {
-			display: flex;
-			flex-direction: column;
-		}
-	</style>
+	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython_stdlib.js') }}"></script>
 </head>
 
 <body onload="brython()" style="user-select: none;">
-	<div class="timeline-ruler">
-		{% for sec in range(seconds) %}
-			{% set time = '%s:%02d'|format(sec // 60, sec % 60) %}
-			{% if sec in events %}
-				<div class="timeline-ruler-tick timeline-ruler-bang">
-					<div class="timeline-ruler-number tooltip"><b >{{time}}</b><span class="tooltiptext">{{ events.get(sec, '') }}</span></div>
-				</div>
-			{% elif sec % 60 == 0 %}
-				<div class="timeline-ruler-tick timeline-ruler-minute">
-					<div class="timeline-ruler-number"><b>{{time}}</b></div>
-				</div>
-			{% elif sec % 10 == 0 %}
-				<div class="timeline-ruler-tick timeline-ruler-10second">
-					<div class="timeline-ruler-number">{{time}}</div>
-				</div>
-			{% elif sec % 5 == 0 %}
-				<div class="timeline-ruler-tick timeline-ruler-5second"></div>
-			{% else %}
-				<div class="timeline-ruler-tick timeline-ruler-1second"></div>
-			{% endif %}
-		{% endfor %}
-	</div>
-	<div id="main"></div>
-	<div id="options" class="lower20"></div>
-	<script type="text/python" src="{{ url_for('static', filename='scripts/meh.py') }}"></script>
+	<script type="text/python" src="{{ url_for('static', filename='scripts/script.py') }}"></script>
+	{{ timeline(seconds, events) }}
+
+	{{ bars(start_pos, specs) }}
+	<br>
+	{{ options(specs) }}
+
 </body >
 
 </html>

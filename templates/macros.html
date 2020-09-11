@@ -27,30 +27,37 @@
 {%- macro bars(start_pos, specs) -%}
 	{%- for spec in specs -%}
 		{% set name = spec.name %}
-		<div id="spec-{{ name }}">
-			<input type="text" name="{{ name }}" id="{{ name }}" value="{{ name }}" size="12" style="position: absolute;">
-			{%- for ability in spec.abilities -%}
-				{# if ability.check -#}
-
-				{%- set right = start_pos + ability.cool_down -%}
-				{%- set cd_len = ability.cool_down - ability.duration -%}
-				{%- set hide = 'height: 0px; visibility: hidden;' -%}
-				{%- if ability.check -%}
-					<div id="abl-{{ ability.name }}" class="tooltip abl-bar">
-				{%- else -%}
-					<div id="abl-{{ ability.name }}" class="tooltip abl-bar" style="height: 0px; visibility: hidden;">
-				{%- endif -%}
-					<button class="btn-add" id="btn-{{ ability.name }}">+</button>
-					<div class="ability-bar higher20" style="left: {{ start_pos }}px; right: {{ right }}px; width: {{ ability.cool_down }}px;" id="abl-bar-{{ ability.name }}">
-						<table class="ability-tbl">
-							<td style="max-width: {{ ability.duration }}px; width: {{ ability.duration }}px; background-color: {{ ability.color_main }};" class="duration">{{ ability.name }}</td>
-							<td style="width: {{ cd_len }}px; background-color: {{ ability.color_cd }};"></td>
+		<div id="spec-{{name}}">
+			<div id="spec-{{ name }}0" class="spec-{{ name }}">
+				<input id="nick-{{ name }}0" class="spec-nick" type="text" name="{{ name }}" value="{{ name }}" size="12">
+				{%- for ability in spec.abilities -%}
+					{%- set right = start_pos + ability.cool_down -%}
+					{%- set cd_len = ability.cool_down - ability.duration -%}
+					{%- set hide = 'height: 0px; visibility: hidden;' -%}
+					{%- if ability.check -%}
+						<div id="abl-{{ ability.name }}" class="tooltip abl-bar">
+					{%- else -%}
+						<div id="abl-{{ ability.name }}" class="tooltip abl-bar" style="height: 0px; visibility: hidden;">
+					{%- endif -%}
+						<button id="btn-{{ ability.name }}" class="btn-add">+</button>
+						<div id="abl-bar-{{ ability.name }}0" class="ability-bar higher20" style="left: {{ start_pos }}px; right: {{ right }}px; width: {{ ability.cool_down }}px;" >
 							<span class="tooltiptext">0:00</span>
-						</table>
+							<table class="ability-tbl">
+								<tbody>
+									<tr>
+										<td class="duration" style="max-width: {{ ability.duration }}px; width: {{ ability.duration }}px; background-color: {{ ability.color_main }};" >
+											{{ ability.name }}
+										</td>
+										<td style="width: {{ cd_len }}px; background-color: {{ ability.color_cd }};">
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
-				</div>
-				<br>
-			{%- endfor -%}
+					<br>
+				{%- endfor -%}
+			</div>
 		</div>
 	{%- endfor -%}
 {%- endmacro -%}
@@ -60,17 +67,21 @@
 	<div id="options" class="container">
 		{%- for spec in specs -%}
 			{%- set name = spec.name -%}
-			<div class="child">
-				<input type="checkbox" name="box-{{name}}" id="box-{{name}}" checked class="spec-checkbox">
-				<label for="{{name}}">{{name}}</label>
-				<input type="text" name="count-{{name}}" id="count-{{name}}" value=1 size=1></td>
+			<div class="child" id="options-{{name}}" style="background-color: {{spec.color_cd}};">
+				<label>{{name}}</label>
+				<input id="count-{{name}}" class="spec-inp" type="text" name="count-{{name}}" value=1 size=1></td>
 				<br>
-				{%- for ability in spec.abilities -%}
-					{%- set name = ability.name -%}
-					<input type="checkbox" name="box-{{name}}" id="box-{{name}}" {{'checked' if ability.check else ''}} class="ability-checkbox">
-					<label for="{{name}}">{{name}}</label>
+				<div id="options-{{name}}0">
+					<input id="box-{{name}}0" class="spec-checkbox" type="checkbox" name="box-{{name}}" checked>
+					<label><b>{{name}}</b></label>
 					<br>
-				{%- endfor -%}
+					{%- for ability in spec.abilities -%}
+						{%- set name = ability.name -%}
+						<input id="box-{{name}}" class="ability-checkbox" type="checkbox" name="box-{{name}}"  {{ 'checked' if ability.check else '' }} >
+						<label for="{{name}}">{{name}}</label>
+						<br>
+					{%- endfor -%}
+				</div>
 			</div>
 		{%- endfor -%}
 	</div>

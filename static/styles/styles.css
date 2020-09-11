@@ -120,3 +120,5 @@ body {
 .child {
 	padding: 5px;
 }
+.spec-inp, .spec-nick {
+	position: absolute;

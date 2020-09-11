@@ -56,8 +56,8 @@ inner_peace = Ability('Tranquility Inner Peace', 16, tranq.cool_down - 60, rdrui
 tree = Ability('Tree of Life', 30, 3 * 60, rdruid, False)
 flourish = Ability('Flourish', 8, 1.5 * 60, rdruid, False)
 
-yulon = Ability('Yu\'lon', 25, 3 * 60, mwmonk)
 revival = Ability('Revival', 5, 3 * 60, mwmonk)
+yulon = Ability('Yu\'lon', 25, 3 * 60, mwmonk)
 chi_ji = Ability('Chi-Ji', 25, 3 * 60, mwmonk, False)
 weapons = Ability('Weapons of Order', 30, 2 * 60, mwmonk, False)
 

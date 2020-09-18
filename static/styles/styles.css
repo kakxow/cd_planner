@@ -122,3 +122,15 @@ body {
 }
 .spec-inp, .spec-nick {
 	position: absolute;
+}
+.phase {
+	position: absolute;
+	border-left: 1px solid #000;
+	border-right: 1px solid #000;
+	text-align: center;
+}
+.cast {
+	width: 5px;
+	max-width: 5px;
+	min-height: 18px;
+}

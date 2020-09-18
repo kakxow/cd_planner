@@ -15,6 +15,13 @@ class Spec:
         self.name = name
         self.color_main, self.color_cd = colors
 
+    def to_json(self):
+        return {
+            'name': self.name,
+            'color_main': self.color_main,
+            'color_cd': self.color_cd,
+        }
+
 
 class Ability:
     def __init__(
@@ -33,19 +40,32 @@ class Ability:
         self.color_cd = spec.color_cd
         self.check = check
 
+    def to_json(self):
+        return {
+            'name': self.name,
+            'duration': self.duration,
+            'cool_down': self.cool_down,
+            'spec': self.spec,
+            'color_main': self.color_main,
+            'color_cd': self.color_cd,
+            'check': self.check,
+        }
 
-hpal = Spec('Paladin', ('#F58CBA', '#FAC7DD'))
-rdruid = Spec('Druid', ('#FF7D0A', '#FF9D47'))
-mwmonk = Spec('Monk', ('#00FF96', '#47FFB3'))
-discpriest = Spec('Discipline Priest', ('#FFFF00', '#FFFF47'))
-hpriest = Spec('Holy Priest', ('#A3A3A3', '#C2C2C2'))
-rshaman = Spec('Shaman', ('#0070DE', '#1F8FFF'))
+
+hpal = Spec('Paladin Holy', ('#F58CBA', '#FAC7DD'))
+rdruid = Spec('Druid Restoration', ('#FF7D0A', '#FFBE85'))
+mwmonk = Spec('Monk Mistweaver', ('#00FF96', '#99FFD5'))
+discpriest = Spec('Priest Discipline', ('#7EDDF9', '#C5EFFC'))
+hpriest = Spec('Priest Holy', ('#A3A3A3', '#CCCCCC'))
+rshaman = Spec('Shaman Restoration', ('#0070DE', '#5CADFF'))
 
 specs = [var for _, var in locals().items() if type(var) == Spec]
+specs_dict = {spec.name: spec for spec in specs}
 
 
 aw = Ability('Awenging Wrath', 20, 2 * 60, hpal)
 sw = Ability('Sanctified Wrath', 20 * 1.25, 2 * 60, hpal, False)
+osw = Ability('BFA Sanctified Wrath', 20 * 1.25, 2 * 60 * 0.9, hpal, False)
 am = Ability('Aura Mastery', 8, 3 * 60, hpal)
 lh = Ability('Light\'s Hammmer', 14, 60, hpal, False)
 ha = Ability('Holy Avenger', 20, 3 * 60, hpal, False)
@@ -80,7 +100,82 @@ ascendance = Ability('Ascendance', 15, 3 * 60, rshaman, False)
 
 
 abilities = [var for _, var in locals().items() if type(var) == Ability]
+abilities_dict = {a.name: a for a in abilities}
 
 
 for spec in specs:
     spec.abilities = [abil for abil in abilities if abil.spec == spec]
+
+phases = {
+    'Form Ranks': [
+        ('0:30', '0:55'),
+        ('3:00', '3:25'),
+        ('5:30', '5:55')
+    ],
+    'Stand Alone': [
+        ('1:30', '2:00'),
+        ('4:00', '4:30')
+    ],
+    'Deferred Sentence': [
+        ('2:00', '2:30'),
+        ('4:30', '5:00')
+    ],
+    'Obey or Suffer': [
+        ('2:30', '3:00'),
+        ('5:00', '5:30')
+    ],
+}
+
+boss_casts = {
+    'Form Ranks': (
+        '0:30',
+        '0:40',
+        '0:50',
+        '3:00',
+        '3:10',
+        '3:20',
+        '5:30',
+        '5:40',
+        '5:50',
+    ),
+    'Spark': (
+        '0:30',
+        '0:45',
+        '1:00',
+        '2:05',
+        '2:20',
+        '2:35',
+        '3:35',
+        '3:50',
+        '4:05',
+    ),
+    'Eruption': (
+        '0:55',
+        '2:40',
+        '4:25',
+        '6:10',
+    ),
+    'Charge': (
+        '0:35',
+        '1:15',
+        '1:55',
+        '2:35',
+        '3:20',
+        '4:00',
+        '4:45',
+        '5:20',
+        '6:05',
+        '6:45',
+    ),
+    'Burst': (
+        '1:40',
+        '3:25',
+        '5:15',
+        '7:00',
+    ),
+}
+
+bosses = {
+    'The Queen\'s Court': (phases, boss_casts),
+    'Queen Aszhara': ({}, {}),
+}

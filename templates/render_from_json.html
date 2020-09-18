@@ -1,4 +1,4 @@
-{% from "macros.html" import timeline, bars, options, render_phases, render_boss_casts %}
+{% from "macros.html" import timeline, bars2, options2, render_phases2, render_boss_casts2 %}
 <html>
 
 <head>
@@ -16,12 +16,12 @@
 		{%- endfor -%}
 	</select>
 	{{ timeline(seconds) }}
-	{{ render_phases(phases, start_pos) }}
-	{{ render_boss_casts(events, start_pos, scale) }}
+	{{ render_phases2(encounter, start_pos) }}
+	{{ render_boss_casts2(encounter, start_pos) }}
 	{{ timeline(seconds) }}
-	{{ bars(start_pos, specs) }}
+	{{ bars2(layout, start_pos) }}
 	<br>
-	{{ options(specs) }}
+	{{ options2(layout) }}
 
 </body >
 

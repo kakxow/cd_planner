@@ -1,12 +1,8 @@
-{% macro timeline(seconds, events) %}
+{% macro timeline(seconds) %}
 	<div class="timeline-ruler">
 		{% for sec in range(seconds) %}
 			{% set time = '%s:%02d'|format(sec // 60, sec % 60) %}
-			{% if sec in events %}
-				<div class="timeline-ruler-tick timeline-ruler-bang">
-					<div class="timeline-ruler-number tooltip"><b >{{time}}</b><span class="tooltiptext">{{ events.get(sec, '') }}</span></div>
-				</div>
-			{% elif sec % 60 == 0 %}
+			{% if sec % 60 == 0 %}
 				<div class="timeline-ruler-tick timeline-ruler-minute">
 					<div class="timeline-ruler-number"><b>{{time}}</b></div>
 				</div>
@@ -25,30 +21,31 @@
 
 
 {%- macro bars(start_pos, specs) -%}
+	<div id="specs">
 	{%- for spec in specs -%}
 		{% set name = spec.name %}
 		<div id="spec-{{name}}">
-			<div id="spec-{{ name }}0" class="spec-{{ name }}">
-				<input id="nick-{{ name }}0" class="spec-nick" type="text" name="{{ name }}" value="{{ name }}" size="12">
+			<div id="spec-{{name}}0" class="spec-{{name}}">
+				<input id="nick-{{name}}0" class="spec-nick" type="text" name="{{name}}" value="{{name}}" size="12">
 				{%- for ability in spec.abilities -%}
 					{%- set right = start_pos + ability.cool_down -%}
 					{%- set cd_len = ability.cool_down - ability.duration -%}
 					{%- set hide = 'height: 0px; visibility: hidden;' -%}
 					{%- if ability.check -%}
-						<div id="abl-{{ ability.name }}" class="tooltip abl-bar">
+						<div id="abl-{{ability.name}}0" class="tooltip abl-bar">
 					{%- else -%}
-						<div id="abl-{{ ability.name }}" class="tooltip abl-bar" style="height: 0px; visibility: hidden;">
+						<div id="abl-{{ability.name}}0" class="tooltip abl-bar" style="height: 0px; visibility: hidden;">
 					{%- endif -%}
-						<button id="btn-{{ ability.name }}" class="btn-add">+</button>
-						<div id="abl-bar-{{ ability.name }}0" class="ability-bar higher20" style="left: {{ start_pos }}px; right: {{ right }}px; width: {{ ability.cool_down }}px;" >
+						<button id="btn-{{ability.name}}" class="btn-add">+</button>
+						<div id="abl-bar-{{ability.name}}0" class="ability-bar higher20" style="left: {{start_pos}}px; right: {{right}}px; width: {{ability.cool_down}}px;" >
 							<span class="tooltiptext">0:00</span>
 							<table class="ability-tbl">
 								<tbody>
 									<tr>
-										<td class="duration" style="max-width: {{ ability.duration }}px; width: {{ ability.duration }}px; background-color: {{ ability.color_main }};" >
-											{{ ability.name }}
+										<td class="duration" style="max-width: {{ability.duration}}px; width: {{ability.duration}}px; background-color: {{ability.color_main}};" >
+											{{ability.name}}
 										</td>
-										<td style="width: {{ cd_len }}px; background-color: {{ ability.color_cd }};">
+										<td style="width: {{cd_len}}px; background-color: {{ability.color_cd}};">
 										</td>
 									</tr>
 								</tbody>
@@ -60,6 +57,7 @@
 			</div>
 		</div>
 	{%- endfor -%}
+	</div>
 {%- endmacro -%}
 
 
@@ -73,15 +71,168 @@
 				<br>
 				<div id="options-{{name}}0">
 					<input id="box-{{name}}0" class="spec-checkbox" type="checkbox" name="box-{{name}}" checked>
-					<label><b>{{name}}</b></label>
+					<label for="box-{{name}}0"><b id="lbl-{{name}}0">{{name}}</b></label>
 					<br>
 					{%- for ability in spec.abilities -%}
 						{%- set name = ability.name -%}
-						<input id="box-{{name}}" class="ability-checkbox" type="checkbox" name="box-{{name}}"  {{ 'checked' if ability.check else '' }} >
-						<label for="{{name}}">{{name}}</label>
+						<input id="box-{{name}}0" class="ability-checkbox" type="checkbox" name="box-{{name}}0"  {{'checked' if ability.check else ''}} >
+						<label for="box-{{name}}0">{{name}}</label>
 						<br>
 					{%- endfor -%}
 				</div>
+			</div>
+		{%- endfor -%}
+	</div>
+{%- endmacro -%}
+
+
+{%- macro render_phases(phases, start_pos) -%}
+	<div id="phases">
+		{%- for name, phase in phases.items() -%}
+			{%- for period in phase -%}
+				{%- set start, end = period -%}
+				<div class="phase" style="left: {{start_pos + start + 2}}px; right: {{start_pos + end + 2}}px; width: {{end-start - 1}}px; background-color: #F58CBA;max-width: {{end-start-1}}px;">
+					{{name}}
+				</div>
+			{%- endfor -%}
+		{%- endfor -%}
+	</div>
+	<br>
+{%- endmacro -%}
+
+
+{%- macro render_boss_casts(boss_casts, start_pos, scale) -%}
+	<div id="boss-casts">
+		{%- for name, casts in boss_casts.items() -%}
+			<div id="boss-casts-{{name}}" style="border-bottom: 1px solid #000;">
+				{%- for cast in casts -%}
+					{%- set ts = cast / scale - 1 -%}
+					{% set time = '%s:%02d'|format((ts // 60)|int, ts % 60) %}
+					<div class="phase tooltip" style="left: {{start_pos + cast + 2}}px; width: 5px; background-color: #F58CBA; max-width: 5px; min-height: 18px; ">
+						&nbsp;<span class="tooltiptext">{{name}} at <br>{{time}}</span>
+					</div>
+				{%- endfor -%}
+			{{name}}
+			</div>
+		{%- endfor -%}
+	</div>
+{%- endmacro -%}
+
+
+
+{%- macro bars2(layout, start_pos) -%}
+	{%- for element in layout -%}
+		{%- set spec = element.spec -%}
+		{%- set name = spec.name -%}
+		<div id="spec-{{name}}" class="spec">
+			{%- for player in element.players -%}
+				{%- set spec_id = name ~ loop.index0 -%}
+				{%- set player_loop = loop -%}
+				{%- if player.is_visible -%}
+					<div id="spec-{{spec_id}}" class="spec-{{name}}">
+				{%- else -%}
+					<div id="spec-{{spec_id}}" class="spec-{{name}}" style="height: 0px; visibility: hidden;">
+				{%- endif -%}
+					<input id="nick-{{spec_id}}" class="spec-nick" type="text" value="{{player.nick}}" size="12">
+					{%- for ability in player.abilities -%}
+						{%- set abl_id = ability.name ~ player_loop.index0 -%}
+						{%- if ability.is_visible -%}
+							<div id="abl-{{abl_id}}" class="tooltip abl-bar">
+						{%- else -%}
+							<div id="abl-{{abl_id}}" class="tooltip abl-bar" style="height: 0px; visibility: hidden;">
+						{%- endif -%}
+							<button id="btn-{{abl_id}}" class="btn-add">+</button>
+						{%- for pos in ability.casts -%}
+							{%- set left = pos + start_pos -%}
+							{%- set right = pos + ability.cool_down + start_pos -%}
+							{%- set cd_len = ability.cool_down - ability.duration -%}
+							<div id="abl-bar-{{abl_id}}" class="ability-bar higher20" style="left: {{left}}px; right: {{right}}px; width: {{ability.cool_down}}px;" >
+								<span class="tooltiptext">0:00</span>
+								<table class="ability-tbl">
+									<tbody>
+										<tr>
+											<td class="duration" style="max-width: {{ability.duration}}px; width: {{ability.duration}}px; background-color: {{spec.color_main}};" >
+												{{ability.name}}
+											</td>
+											<td style="width: {{cd_len}}px; background-color: {{spec.color_cd}};">
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						{%- endfor -%}
+						</div>
+						<br>
+					{%- endfor -%}
+				</div>
+			{%- endfor -%}
+		</div>
+	{%- endfor -%}
+{%- endmacro -%}
+
+
+{%- macro options2(layout) -%}
+	<div id="options" class="container">
+		{%- for element in layout -%}
+			{%- set spec = element.spec -%}
+			{%- set name = spec.name -%}
+			<div class="child options-{{name}}" id="options-{{name}}" style="background-color: {{spec.color_cd}};">
+				<label>{{name}}</label>
+				<input id="count-{{name}}" class="spec-inp" type="text" value={{(element.players)|length}} size=1>
+				<br>
+				{%- for player in element.players -%}
+					{%- set spec_id = name ~ loop.index0 -%}
+					{%- set player_loop = loop -%}
+					{%- if player.is_visible -%}
+						<div id="options-{{spec_id}}">
+					{%- else -%}
+						<div id="options-{{spec_id}}" style="height: 0px; visibility: hidden;">
+					{%- endif -%}
+						<input id="box-{{spec_id}}" class="spec-checkbox" type="checkbox" checked>
+						<label for="box-{{spec_id}}"><b id="lbl-{{spec_id}}">{{name}}</b></label>
+						<br>
+						{%- for ability in spec.abilities -%}
+							{%- set name = ability.name -%}
+							{%- set abl_id = name ~ player_loop.index0 -%}
+							<input id="box-{{abl_id}}" class="ability-checkbox" type="checkbox"
+								{{'checked' if ability.is_visible else ''}} >
+							<label for="box-{{abl_id}}">{{name}}</label>
+							<br>
+						{%- endfor -%}
+					</div>
+				{%- endfor -%}
+			</div>
+		{%- endfor -%}
+	</div>
+{%- endmacro -%}
+
+
+{%- macro render_phases2(encounter, start_pos) -%}
+	<div id="phases">
+		{%- for phase in encounter.phases -%}
+			{%- for interval in phase.intervals -%}
+				{%- set start, end = interval -%}
+				<div class="phase" style="left: {{start_pos + start + 2}}px; right: {{start_pos + end + 2}}px; width: {{end-start - 1}}px; background-color: {{phase.color}};max-width: {{end-start-1}}px;">
+					{{phase.name}}
+				</div>
+			{%- endfor -%}
+		{%- endfor -%}
+	</div>
+	<br>
+{%- endmacro -%}
+
+
+{%- macro render_boss_casts2(encounter, start_pos) -%}
+	<div id="boss-casts">
+		{%- for action in encounter.boss_actions -%}
+			<div id="boss-casts-{{action.name}}" style="border-bottom: 1px solid #000;">
+				{%- for cast in action.casts -%}
+					{% set time = '%s:%02d'|format(cast // 60, cast % 60) %}
+					<div class="phase tooltip cast" style="left: {{start_pos + cast + 2}}px; background-color: {{action.color}};">
+						&nbsp;<span class="tooltiptext">{{action.name}} at<br>{{time}}</span>
+					</div>
+				{%- endfor -%}
+			{{action.name}}
 			</div>
 		{%- endfor -%}
 	</div>

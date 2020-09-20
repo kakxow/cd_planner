@@ -1,4 +1,4 @@
-{% from "macros.html" import timeline, bars2, options2, render_phases2, render_boss_casts2 %}
+{% from "macros.html" import timeline2, bars2, options2, render_phases2, render_boss_casts2 %}
 <html>
 
 <head>
@@ -8,20 +8,29 @@
 	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython_stdlib.js') }}"></script>
 </head>
 
-<body onload="brython()" style="user-select: none;">
+<body onload="brython()">
 	<script type="text/python" src="{{ url_for('static', filename='scripts/script.py') }}"></script>
 	<select id="boss-select" style="width: 125px; position: absolute;" select onchange="location = this.value;">
+		{%- set selected_boss = data.encounter.name -%}
 		{%- for boss in bosses -%}
 		    <option value="/planner/{{ boss }}" {{ 'selected' if boss == selected_boss }}>{{ boss }}</option>
 		{%- endfor -%}
 	</select>
-	{{ timeline(seconds) }}
-	{{ render_phases2(encounter, start_pos) }}
-	{{ render_boss_casts2(encounter, start_pos) }}
-	{{ timeline(seconds) }}
-	{{ bars2(layout, start_pos) }}
+	{{ timeline2(data) }}
+	{{ render_phases2(data, start_pos) }}
+	{{ render_boss_casts2(data, start_pos, scale) }}
+	{%- if data.encounter.phases or data.encounter.boss_actions -%}
+		{{ timeline2(data) }}
+	{%- endif -%}
+	{{ bars2(data, start_pos) }}
 	<br>
-	{{ options2(layout) }}
+	{{ options2(data) }}
+	<div id="modal" class="modal">
+		<div class="modal-content">
+			<span class="close" id="close-modal">&times;</span>
+			<p id="modal-content"></p>
+		</div>
+	</div>
 
 </body >
 

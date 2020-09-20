@@ -1,7 +1,7 @@
 import json
 import types
 
-from browser import document, html, ajax  # type: ignore
+from browser import document, html, ajax, window  # type: ignore
 from browser.widgets.dialog import InfoDialog  # type: ignore
 
 import data
@@ -238,6 +238,7 @@ class AbilityRow(html.DIV):
         self.bind_bars()
 
         self.btn_add = html.BUTTON('+', Class='btn-add', id=f'btn-{ability.name}{id_}')
+        self.btn_add.unbind('click')
         self.btn_add.bind('click', self.add_bar())
         self <= self.btn_add
         self <= self._bars
@@ -385,7 +386,7 @@ def casts_serialize():
         for cast in action_div.children:
             tooltip = cast.select('.tooltiptext')[0]
             text = tooltip.textContent.strip()
-            time = text.split(' at ')[1]
+            time = text.split(' at')[1]
             action['casts'].append(time)
         boss_casts.append(action)
     return boss_casts
@@ -447,14 +448,41 @@ def send(d: dict):
     _data = json.dumps(d)
     print(_data)
     req.send(_data)
+    req.bind('complete', show_msg)
 
 
 def show_msg(req):
+    document['modal'].style.display = 'block'
+    p = document['modal-content']
+
     if req.status == 200:
-        msg = req.text
+        msg = f'{window.location.hostname}/{req.text}'
+
     else:
-        msg = req.status
-    InfoDialog("Message", msg)
+        msg = f'Error {req.status}'
+
+    p.textContent = msg
+
+
+def modal_and_save():
+    btn = html.BUTTON('Save', id='save-btn')
+    btn.bind('click', serialize)
+    document <= btn
+
+    # modal = document['modal']
+    span = document['close-modal']
+    span.bind('click', close_modal)
+    window.bind('keydown', esc_close_modal)
+    # window.bind('click', close_modal)
+
+
+def esc_close_modal(ev):
+    if ev.keyCode == 27:
+        document['modal'].style.display = 'none'
+
+
+def close_modal(ev):
+    document['modal'].style.display = 'none'
 
 
 if __name__ == '__main__':
@@ -462,14 +490,5 @@ if __name__ == '__main__':
     spec_boxes()
     spec_inps()
     nicknames_inputs()
-    # serialize('')
     abls = [AbilityRow.new(bar) for bar in document.select('.abl-bar')]
-    btn = html.BUTTON('serialize')
-    btn.bind('click', serialize)
-    document <= btn
-    # btn = html.BUTTON('test')
-    # btn.bind('click', test)
-    # document <= btn
-    # Add colors to boss casts and phases.
-    # Create base render_file
-    # Add serialization
+    modal_and_save()

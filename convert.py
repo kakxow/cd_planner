@@ -1,18 +1,33 @@
 from collections import defaultdict
 import datetime as dt
+import json
+import types
 from typing import List, Union
 
 import data
-# import schema
 
 
-def fix_data(d):
+def json_to_sns(s: str, mode: str):
+    # Modes - file for filename or str.
+    if mode == 'file':
+        file_name = s
+        with open(file_name) as f:
+            d = json.load(f, object_hook=lambda x: types.SimpleNamespace(**x))
+    elif mode == 'str':
+        d = json.loads(s, object_hook=lambda x: types.SimpleNamespace(**x))
+    else:
+        raise ValueError('Mode should be "file" or "str"')
+    return d
+
+
+def enhance_data(d: types.SimpleNamespace):
     new_obj = d
     for phase in new_obj.encounter.phases:
-        phase.intervals = [interval_to_px(interval) for interval in phase.intervals]
+        phase.intervals = [interval_to_px(interval)
+                           for interval in phase.intervals]
 
     for action in new_obj.encounter.boss_actions:
-        action.casts = [time_to_px(cast) for cast in action.casts]
+        action.casts = [time_to_sec(cast) for cast in action.casts]
 
     for specialization in new_obj.layout:
         spec_name = specialization.spec.name
@@ -25,10 +40,6 @@ def fix_data(d):
                 for arg, val in vars(ability_obj).items():
                     setattr(ability, arg, val)
                 ability.casts = [time_to_px(cast) for cast in ability.casts]
-                # is_visible = ability.is_visible
-                # ability = data.abilities_dict[ability.name]
-                # ability.casts = casts
-                # ability.is_visible = is_visible
     return new_obj
 
 
@@ -96,7 +107,6 @@ def boss_casts(bc):
 
 
 if __name__ == '__main__':
-    import json
     with open('new.json') as f:
         d = json.load(f)
     with open('pretty.json', 'w') as f:

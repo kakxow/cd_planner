@@ -65,7 +65,6 @@ specs_dict = {spec.name: spec for spec in specs}
 
 aw = Ability('Awenging Wrath', 20, 2 * 60, hpal)
 sw = Ability('Sanctified Wrath', 20 * 1.25, 2 * 60, hpal, False)
-osw = Ability('BFA Sanctified Wrath', 20 * 1.25, 2 * 60 * 0.9, hpal, False)
 am = Ability('Aura Mastery', 8, 3 * 60, hpal)
 lh = Ability('Light\'s Hammmer', 14, 60, hpal, False)
 ha = Ability('Holy Avenger', 20, 3 * 60, hpal, False)

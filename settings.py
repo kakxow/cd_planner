@@ -19,6 +19,7 @@ class Prod(Config):
 
 class Dev(Config):
     DEBUG = True
+    SQLALCHEMY_ECHO = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///db.sqlite3'
 
 

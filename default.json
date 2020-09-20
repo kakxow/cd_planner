@@ -161,13 +161,6 @@
                             "casts": [
                                 "0:00"
                             ],
-                            "name": "BFA Sanctified Wrath",
-                            "is_visible": false
-                        },
-                        {
-                            "casts": [
-                                "0:00"
-                            ],
                             "name": "Aura Mastery",
                             "is_visible": true
                         },

@@ -193,7 +193,7 @@
 						<input id="box-{{spec_id}}" class="spec-checkbox" type="checkbox" checked>
 						<label for="box-{{spec_id}}"><b id="lbl-{{spec_id}}">{{name}}</b></label>
 						<br>
-						{%- for ability in spec.abilities -%}
+						{%- for ability in player.abilities -%}
 							{%- set name = ability.name -%}
 							{%- set abl_id = name ~ player_loop.index0 -%}
 							<input id="box-{{abl_id}}" class="ability-checkbox" type="checkbox"

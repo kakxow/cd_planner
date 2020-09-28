@@ -27,6 +27,7 @@ def save_layout():
     return h
 
 
+@views.route('/')
 @views.route('/planner')
 def planner():
     return flask.redirect(f'planner/{BOSSES[0].name}')

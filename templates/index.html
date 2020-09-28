@@ -1,7 +1,12 @@
-{% from "macros.html" import bars, options %}
+<!DOCTYPE html>
+<html>
 <head>
+	<title>index</title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
+	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython_stdlib.js') }}"></script>
 </head>
-
-
-{{options(specs)}}
+<body onload="brython()">
+	<script type="text/python" src="{{ url_for('static', filename='scripts/clear_script.py') }}"></script>
+</body>
+</html>

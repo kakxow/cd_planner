@@ -1,25 +1,17 @@
 import flask
-
-from data import specs, START_POS, TOTAL_TIME
-
-app = flask.Flask(__name__, static_url_path='')
+import db
+import views
 
 
-@app.route('/planner')
-def planner():
-    events = {100: 'BAM', 120: 'BAM2', 11: 'hoj', 105: 'MEGABAM'}
-    return flask.render_template(
-        'brtn_test.html',
-        seconds=TOTAL_TIME,
-        events=events,
-        specs=specs,
-        start_pos=START_POS
-    )
+def create_app(conf: str):
+    # conf in Prod, Dev, Test
+    app = flask.Flask(__name__, static_url_path='')
+    app.config.from_object(f'settings.{conf}')
 
+    db.db.init_app(app)
 
-@app.route('/')
-def index():
-    return flask.render_template('index.html', specs=specs)
+    app.register_blueprint(views.views)
+    return app
 
 
 @app.route('/data.py')
@@ -28,5 +20,5 @@ def serve_data():
 
 
 if __name__ == '__main__':
-    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+    app = create_app('Dev')
     app.run(debug=True)

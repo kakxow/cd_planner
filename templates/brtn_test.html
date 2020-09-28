@@ -1,7 +1,9 @@
-{% from "macros.html" import timeline, bars, options %}
+
+{% from "macros.html" import timeline, bars, options, render_phases, render_boss_casts %}
 <html>
 
 <head>
+	<title>CD Planner</title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
 	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython_stdlib.js') }}"></script>
@@ -9,8 +11,16 @@
 
 <body onload="brython()" style="user-select: none;">
 	<script type="text/python" src="{{ url_for('static', filename='scripts/script.py') }}"></script>
-	{{ timeline(seconds, events) }}
 
+	<select id="boss-select" style="width: 125px; position: absolute;" select onchange="location = this.value;">
+		{%- for boss in bosses -%}
+		    <option value="/planner/{{ boss }}" {{ 'selected' if boss == selected_boss }}>{{ boss }}</option>
+		{%- endfor -%}
+	</select>
+	{{ timeline(seconds) }}
+	{{ render_phases(phases, start_pos) }}
+	{{ render_boss_casts(events, start_pos, scale) }}
+	{{ timeline(seconds) }}
 	{{ bars(start_pos, specs) }}
 	<br>
 	{{ options(specs) }}

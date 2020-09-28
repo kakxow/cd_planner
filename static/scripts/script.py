@@ -261,6 +261,7 @@ class AbilityRow(html.DIV):
         bar.bind_bars()
 
         bar.btn_add = document[f'btn-{ability_id}']
+        bar.btn_add.unbind('click')
         bar.btn_add.bind('click', bar.add_bar())
         return bar
 

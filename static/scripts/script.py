@@ -1,5 +1,5 @@
 import json
-import types
+from types import MethodType
 
 from browser import document, html, ajax, window  # type: ignore
 from browser.widgets.dialog import InfoDialog  # type: ignore
@@ -189,9 +189,9 @@ class AbilityBar(Draggable):
     @classmethod
     def new(cls, bar: html.DIV, ability: Ability):
         bar.ability = ability
-        bar.drag = types.MethodType(cls.drag, bar)
-        bar.move = types.MethodType(cls.move, bar)
-        bar._move = types.MethodType(cls._move, bar)
+        bar.drag = MethodType(cls.drag, bar)
+        bar.move = MethodType(cls.move, bar)
+        bar._move = MethodType(cls._move, bar)
         bar.tooltip = bar.select('.tooltiptext')[0]
         return bar
 
@@ -248,8 +248,8 @@ class AbilityRow(html.DIV):
 
     @classmethod
     def new(cls, bar: html.DIV):
-        bar.add_bar = types.MethodType(cls.add_bar, bar)
-        bar.bind_bars = types.MethodType(cls.bind_bars, bar)
+        bar.add_bar = MethodType(cls.add_bar, bar)
+        bar.bind_bars = MethodType(cls.bind_bars, bar)
 
         ability_id = bar.id.lstrip('abl-')
         ability_name = ability_id[:-1]

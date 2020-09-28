@@ -5,12 +5,12 @@
 	<title>CD Planner</title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
 	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython_stdlib.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython_modules.js') }}"></script>
 </head>
 
 <body onload="brython()">
 	<script type="text/python" src="{{ url_for('static', filename='scripts/script.py') }}"></script>
-	<select id="boss-select" style="width: 125px; position: absolute;" select onchange="location = this.value;">
+	<select id="boss-select" class="boss-select" onchange="location = this.value;">
 		{%- set selected_boss = data.encounter.name -%}
 		{%- for boss in bosses -%}
 		    <option value="/planner/{{ boss }}" {{ 'selected' if boss == selected_boss }}>{{ boss }}</option>

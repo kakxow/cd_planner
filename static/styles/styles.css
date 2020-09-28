@@ -168,6 +168,10 @@ body {
 	text-decoration: none;
 	cursor: pointer;
 }
+.boss-select {
+	width: 125px;
+	position: absolute;
+}
 .btn-lock {
 	position: absolute;
 	top: 30px;

@@ -2,10 +2,9 @@ import json
 from types import MethodType
 
 from browser import document, html, ajax, window  # type: ignore
-from browser.widgets.dialog import InfoDialog  # type: ignore
 
 import data
-from data import START_POS, SCALE, PIXELS, Ability, abilities, STEP
+from data import START_POS, SCALE, PIXELS, Ability, abilities
 
 
 def factory_activate_abl(box):
@@ -153,7 +152,7 @@ class Draggable(html.DIV):
         self.bind('mouseleave', _stop_drag)
         self.bind('mousemove', _drag)
 
-    def move(self, delta: int):
+    def move(self, delta: int, target=None):
         new_pos = self.offsetLeft - delta
         new_pos_right = new_pos + self.ability.cool_down
         obstacles_right = \
@@ -162,11 +161,13 @@ class Draggable(html.DIV):
             False if not self._left else px_to_float(self._left.style.right) > new_pos
 
         if obstacles_left and delta > 0:
-            self._left.move(STEP)
+            self._left.move(SCALE, self)
         elif obstacles_right and delta < 0:
-            self._right.move(-STEP)
+            self._right.move(-SCALE, self)
         elif new_pos <= PIXELS and new_pos >= START_POS:
             self._move(new_pos)
+            if target:
+                target.move(delta)
 
     def _move(self, new_pos: int):
         self.style.left = f'{new_pos}px'

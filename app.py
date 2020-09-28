@@ -14,11 +14,6 @@ def create_app(conf: str):
     return app
 
 
-@app.route('/data.py')
-def serve_data():
-    return flask.send_file('data.py')
-
-
 if __name__ == '__main__':
     app = create_app('Dev')
     app.run(debug=True)

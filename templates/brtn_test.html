@@ -1,3 +1,4 @@
+
 {% from "macros.html" import timeline, bars, options, render_phases, render_boss_casts %}
 <html>
 
@@ -10,6 +11,7 @@
 
 <body onload="brython()" style="user-select: none;">
 	<script type="text/python" src="{{ url_for('static', filename='scripts/script.py') }}"></script>
+
 	<select id="boss-select" style="width: 125px; position: absolute;" select onchange="location = this.value;">
 		{%- for boss in bosses -%}
 		    <option value="/planner/{{ boss }}" {{ 'selected' if boss == selected_boss }}>{{ boss }}</option>

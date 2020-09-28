@@ -422,7 +422,7 @@ def layout_serialize():
             spec['players'].append(inst)
         layout.append(spec)
     # Without this line dragging brakes ^^.
-    [AbilityRow.new(bar) for bar in document.select('.abl-bar')]
+    enable()
     return layout
 
 
@@ -485,10 +485,42 @@ def close_modal(ev):
     document['modal'].style.display = 'none'
 
 
+def lock_unlock():
+    lock_btn = document['lock']
+
+    def _lock_bind(ev):
+        if lock_btn.textContent == 'Lock':
+            lock()
+            lock_btn.textContent = 'Unlock'
+        else:
+            unlock()
+            lock_btn.textContent = 'Lock'
+
+    lock_btn.bind('click', _lock_bind)
+
+
+def lock():
+    for el in document.select('.ability-bar'):
+        el.unbind('mousedown')
+    for el in document.select('input'):
+        el.disabled = True
+
+
+def unlock():
+    enable()
+    for el in document.select('input'):
+        el.disabled = False
+
+
+def enable():
+    [AbilityRow.new(bar) for bar in document.select('.abl-bar')]
+
+
 if __name__ == '__main__':
     ability_boxes()
     spec_boxes()
     spec_inps()
     nicknames_inputs()
-    abls = [AbilityRow.new(bar) for bar in document.select('.abl-bar')]
+    enable()
     modal_and_save()
+    lock_unlock()

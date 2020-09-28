@@ -16,6 +16,7 @@
 		    <option value="/planner/{{ boss }}" {{ 'selected' if boss == selected_boss }}>{{ boss }}</option>
 		{%- endfor -%}
 	</select>
+	<button id="lock" class="btn-lock">Lock</button>
 	{{ timeline2(data) }}
 	{{ render_phases2(data, start_pos) }}
 	{{ render_boss_casts2(data, start_pos, scale) }}

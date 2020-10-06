@@ -1,0 +1,43 @@
+<head>
+	<title>Back Planner</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
+</head>
+
+{%- for zone in zones -%}
+    <details class="zone">
+        <summary>{{zone.name}} {{zone.id}}</summary>
+        <ul>
+            {%- for enc in zone.encounters -%}
+                <li><a href="{{enc.id}}">{{enc.name}}</a></li>
+            {%- endfor -%}
+        </ul>
+    </details>
+{%- endfor -%}
+
+<ul class="rankings">
+{%- for log in rankings -%}
+    {%- if log.reportID -%}
+    {%- set name = log.guildName ~ " at " ~ log.serverName ~ " " ~ log.regionName -%}
+    <li>
+        <a href="log/{{log.reportID}}?fightID={{log.fightID}}&name={{name}}">{{name}}</a>
+        {{log.tanks}}-{{log.healers}}-{{log.melee}}-{{log.ranged}}
+    </li>
+    {%- endif -%}
+{%- endfor -%}
+</ul>
+
+
+<div id="boss-casts">
+    {%- for action in events -%}
+        <div id="boss-casts-{{action.name}}" style="border-bottom: 1px solid #000;">
+            {%- for cast in action.casts -%}
+                {% set time = '%s:%02d'|format(cast // 60, cast % 60) %}
+                {%- set cast = (cast + 1) * 5 -%}
+                <div class="phase tooltip cast" style="left: {{40+99 + cast + 2}}px; background-color: {{action.color}};">
+                    &nbsp;<span class="tooltiptext">{{action.name}} at<br>{{time}}</span>
+                </div>
+            {%- endfor -%}
+        {{action.name}}
+        </div>
+    {%- endfor -%}
+</div>

@@ -1,0 +1,279 @@
+{
+    "encounter": {},
+    "layout": [
+        {
+            "spec": {
+                "name": "Paladin Holy"
+            },
+            "players": [
+                {
+                    "nick": "Paladin Holy",
+                    "is_visible": true,
+                    "abilities": [
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Awenging Wrath",
+                            "is_visible": true
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Sanctified Wrath",
+                            "is_visible": false
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Aura Mastery",
+                            "is_visible": true
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Light's Hammmer",
+                            "is_visible": false
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Holy Avenger",
+                            "is_visible": false
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Ashen Hollow",
+                            "is_visible": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "spec": {
+                "name": "Druid Restoration"
+            },
+            "players": [
+                {
+                    "nick": "Druid Restoration",
+                    "is_visible": true,
+                    "abilities": [
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Tranquility",
+                            "is_visible": true
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Tranquility Inner Peace",
+                            "is_visible": false
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Tree of Life",
+                            "is_visible": false
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Flourish",
+                            "is_visible": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "spec": {
+                "name": "Monk Mistweaver"
+            },
+            "players": [
+                {
+                    "nick": "Monk Mistweaver",
+                    "is_visible": true,
+                    "abilities": [
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Revival",
+                            "is_visible": true
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Yu'lon",
+                            "is_visible": true
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Chi-Ji",
+                            "is_visible": false
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Weapons of Order",
+                            "is_visible": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "spec": {
+                "name": "Priest Discipline"
+            },
+            "players": [
+                {
+                    "nick": "Priest Discipline",
+                    "is_visible": true,
+                    "abilities": [
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Rapture",
+                            "is_visible": true
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Shadow Fiend",
+                            "is_visible": true
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Power Word: Barrier",
+                            "is_visible": true
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Spirit Shell",
+                            "is_visible": false
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Evangelism",
+                            "is_visible": false
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Boon of the Ascended (d)",
+                            "is_visible": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "spec": {
+                "name": "Priest Holy"
+            },
+            "players": [
+                {
+                    "nick": "Priest Holy",
+                    "is_visible": true,
+                    "abilities": [
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Divine Hymn",
+                            "is_visible": true
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Apotheosis",
+                            "is_visible": false
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Holy Word: Salvation",
+                            "is_visible": false
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Boon of the Ascended (h)",
+                            "is_visible": false
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "spec": {
+                "name": "Shaman Restoration"
+            },
+            "players": [
+                {
+                    "nick": "Shaman Restoration",
+                    "is_visible": true,
+                    "abilities": [
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Spirit Link Totem",
+                            "is_visible": true
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Healing Tide Totem",
+                            "is_visible": true
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Ancestral Protection Totem",
+                            "is_visible": false
+                        },
+                        {
+                            "casts": [
+                                "0:00"
+                            ],
+                            "name": "Ascendance",
+                            "is_visible": false
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

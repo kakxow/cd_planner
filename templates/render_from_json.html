@@ -1,0 +1,41 @@
+{% from "macros.html" import timeline2, bars2, options2, render_phases2, render_boss_casts2 %}
+<html>
+
+<head>
+	<title>CD Planner</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
+	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython_modules.js') }}"></script>
+</head>
+
+<body onload="brython()">
+	<script type="text/python" src="{{ url_for('static', filename='scripts/script.py') }}"></script>
+	<select id="boss-select" class="boss-select" onchange="location = this.value;">
+		{%- for boss_name, records in bosses.items() -%}
+			<optgroup label="{{boss_name}}">
+				{%- for record in records -%}
+				<option value="/planner/{{boss_name}}/{{record}}" {{'selected' if record == boss}}>{{ record }}</option>
+				{%- endfor -%}
+			</optgroup>
+		{%- endfor -%}
+	</select>
+	<button id="lock" class="btn-lock">Lock</button>
+	{{ timeline2(data) }}
+	{# {{ render_phases2(data, start_pos) }} #}
+	{{ render_boss_casts2(data, start_pos, scale) }}
+	{%- if data.encounter.phases or data.encounter.boss_actions -%}
+		{{ timeline2(data) }}
+	{%- endif -%}
+	{{ bars2(data, start_pos) }}
+	<br>
+	{{ options2(data) }}
+	<div id="modal" class="modal">
+		<div class="modal-content">
+			<span class="close" id="close-modal">&times;</span>
+			<p id="modal-content"></p>
+		</div>
+	</div>
+
+</body >
+
+</html>

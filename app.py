@@ -1,6 +1,7 @@
 import flask
 
 import db
+import back_view
 import views
 
 
@@ -12,6 +13,7 @@ def create_app(conf: str):
     db.db.init_app(app)
 
     app.register_blueprint(views.views)
+    app.register_blueprint(back_view.views)
     return app
 
 

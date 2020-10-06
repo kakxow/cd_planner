@@ -3,6 +3,7 @@ import dotenv
 
 
 dotenv.load_dotenv()
+wcl_key = os.getenv('WCL_KEY', '')
 
 
 class Config:

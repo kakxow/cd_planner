@@ -1,30 +1,51 @@
 from collections import defaultdict
 import datetime as dt
 import json
-import types
-from typing import List, Union
+from types import SimpleNamespace
+from typing import Dict, List, Union
 
+from db import BossRecord
 import data
 
 
-def json_to_sns(s: str, mode: str):
-    # Modes - file for filename or str.
+def bosses_to_dict(bosses: List[BossRecord]) -> Dict[str, List[str]]:
+    d: Dict[str, List[str]] = defaultdict(list)
+    for boss in bosses:
+        d[boss.boss_name].append(boss.record_name)
+    return d
+
+
+def json_to_sns(s: str, mode: str) -> SimpleNamespace:
+    """ Modes - 'file' for filename or 'str'. """
     if mode == 'file':
         file_name = s
         with open(file_name) as f:
-            d = json.load(f, object_hook=lambda x: types.SimpleNamespace(**x))
+            d = json.load(f, object_hook=lambda x: SimpleNamespace(**x))
     elif mode == 'str':
-        d = json.loads(s, object_hook=lambda x: types.SimpleNamespace(**x))
+        d = json.loads(s, object_hook=lambda x: SimpleNamespace(**x))
     else:
         raise ValueError('Mode should be "file" or "str"')
     return d
 
 
-def enhance_data(d: types.SimpleNamespace):
+def json_to_list_sns(s: str, mode: str) -> List[SimpleNamespace]:
+    """ Modes - 'file' for filename or 'str'. """
+    if mode == 'file':
+        file_name = s
+        with open(file_name) as f:
+            d = json.load(f, object_hook=lambda x: SimpleNamespace(**x))
+    elif mode == 'str':
+        d = json.loads(s, object_hook=lambda x: SimpleNamespace(**x))
+    else:
+        raise ValueError('Mode should be "file" or "str"')
+    return d
+
+
+def enhance_data(d: SimpleNamespace) -> SimpleNamespace:
     new_obj = d
-    for phase in new_obj.encounter.phases:
-        phase.intervals = [interval_to_px(interval)
-                           for interval in phase.intervals]
+    # for phase in new_obj.encounter.phases:
+    #     phase.intervals = [interval_to_px(interval)
+    #                        for interval in phase.intervals]
 
     for action in new_obj.encounter.boss_actions:
         action.casts = [time_to_sec(cast) for cast in action.casts]
@@ -43,7 +64,7 @@ def enhance_data(d: types.SimpleNamespace):
     return new_obj
 
 
-def change(ability):
+def change(ability) -> None:
     ability_obj = data.abilities_dict[ability.name]
     for arg, val in vars(ability_obj).items():
         setattr(ability, arg, val)
@@ -78,7 +99,12 @@ def time_to_sec(s: str) -> int:
     return time.second + time.minute * 60 + time.hour * 60 * 60
 
 
-def phases(p):
+def ms_to_str(ms: int) -> str:
+    sec = int(ms / 1000)
+    return f'{sec//60}:{sec%60:02d}'
+
+
+def phases(p) -> dict:
     res = {}
     for name, periods in p.items():
         periods = [(time_to_px(period[0]), time_to_px(period[1]))
@@ -87,8 +113,8 @@ def phases(p):
     return res
 
 
-def invert_boss_casts(bc):
-    inverted = defaultdict(str)
+def invert_boss_casts(bc) -> dict:
+    inverted: Dict[int, str] = defaultdict(str)
     for name, periods in bc.items():
         seconds = (time_to_sec(ts) for ts in periods)
         for sec in seconds:
@@ -99,7 +125,7 @@ def invert_boss_casts(bc):
     return inverted
 
 
-def boss_casts(bc):
+def boss_casts(bc) -> dict:
     res = {}
     for name, periods in bc.items():
         res[name] = [time_to_px(ts) for ts in periods]

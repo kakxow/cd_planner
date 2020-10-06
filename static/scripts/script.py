@@ -435,7 +435,7 @@ def serialize(ev):
         'encounter': {
             'seconds': seconds,
             'name': document['boss-select'].selectedOptions[0].text,
-            'phases': phase_serialize(),
+            # 'phases': phase_serialize(),
             'boss_actions': casts_serialize()
         },
         'layout': layout_serialize()

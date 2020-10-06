@@ -6,8 +6,8 @@ from typing import List
 import flask
 
 import convert
-from db import db
-from const import BOSSES, DEFAULT_LAYOUT
+from db import BossRecord, db
+from const import DEFAULT_LAYOUT
 
 
 def boss_from_name(
@@ -29,7 +29,7 @@ def default_data() -> SimpleNamespace:
     return convert.enhance_data(d)
 
 
-def data_from_hash(hsh: str):
+def data_from_hash(hsh: str) -> SimpleNamespace:
     raw_data = db.Record.query.filter_by(hash=hsh).first()
     if not raw_data:
         flask.abort(404)
@@ -37,7 +37,7 @@ def data_from_hash(hsh: str):
     return d
 
 
-def default_layout(boss_name: str):
+def default_layout(boss: BossRecord) -> SimpleNamespace:
     d = copy.deepcopy(DEFAULT_LAYOUT)
-    d.encounter = boss_from_name(BOSSES, boss_name)
+    d.encounter = convert.json_to_sns(boss.layout, 'str')
     return d

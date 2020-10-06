@@ -11,14 +11,17 @@
 <body onload="brython()">
 	<script type="text/python" src="{{ url_for('static', filename='scripts/script.py') }}"></script>
 	<select id="boss-select" class="boss-select" onchange="location = this.value;">
-		{%- set selected_boss = data.encounter.name -%}
-		{%- for boss in bosses -%}
-		    <option value="/planner/{{ boss }}" {{ 'selected' if boss == selected_boss }}>{{ boss }}</option>
+		{%- for boss_name, records in bosses.items() -%}
+			<optgroup label="{{boss_name}}">
+				{%- for record in records -%}
+				<option value="/planner/{{boss_name}}/{{record}}" {{'selected' if record == boss}}>{{ record }}</option>
+				{%- endfor -%}
+			</optgroup>
 		{%- endfor -%}
 	</select>
 	<button id="lock" class="btn-lock">Lock</button>
 	{{ timeline2(data) }}
-	{{ render_phases2(data, start_pos) }}
+	{# {{ render_phases2(data, start_pos) }} #}
 	{{ render_boss_casts2(data, start_pos, scale) }}
 	{%- if data.encounter.phases or data.encounter.boss_actions -%}
 		{{ timeline2(data) }}

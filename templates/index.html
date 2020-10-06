@@ -2,11 +2,12 @@
 <html>
 <head>
 	<title>index</title>
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
-	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='scripts/brython_stdlib.js') }}"></script>
 </head>
-<body onload="brython()">
-	<script type="text/python" src="{{ url_for('static', filename='scripts/clear_script.py') }}"></script>
+<body>
+	<div>
+	{%- for color in colors -%}
+		<div style="background-color: {{color}}; width: 50px">&nbsp;</div>
+	{%- endfor -%}
+</div>
 </body>
 </html>

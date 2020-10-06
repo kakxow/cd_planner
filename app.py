@@ -1,5 +1,4 @@
 import flask
-
 import db
 import back_view
 import views
@@ -15,6 +14,11 @@ def create_app(conf: str):
     app.register_blueprint(views.views)
     app.register_blueprint(back_view.views)
     return app
+
+
+@app.route('/data.py')
+def serve_data():
+    return flask.send_file('data.py')
 
 
 if __name__ == '__main__':

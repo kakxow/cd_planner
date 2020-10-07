@@ -41,6 +41,8 @@ class Layout(TypedDict):
 def get_zones() -> List[SimpleNamespace]:
     url_zones = API.format('zones')
     response = requests.get(url_zones, KEY)
+    if response.status_code != 200:
+        raise RuntimeError(f'Bad response from WCL when requesting zones. {response.status_code} {response.text}')
     return convert.json_to_list_sns(response.text, 'str')
 
 
@@ -78,6 +80,8 @@ def get_fight(log_id: str, fight_id: str) -> Fight:
         'translate': True
     }
     response = requests.get(url_fights, params)
+    if response.status_code != 200:
+        raise RuntimeError(f'Bad response from WCL when requesting fights info. {response.status_code} {response.text}')
     data = convert.json_to_sns(response.text, 'str')
     fight = [f for f in data.fights if str(f.id) == fight_id][0]
     return fight
@@ -95,6 +99,8 @@ def get_damage_taken(log_id: str, fight_id: str) -> Tuple[Fight, Abilities]:
         'translate': True,
     }
     response = requests.get(url_tables, params)  # type: ignore
+    if response.status_code != 200:
+        raise RuntimeError(f'Bad response from WCL when requesting damage taken. {response.status_code} {response.text}')
     data = convert.json_to_sns(response.text, 'str')
     for abl in data.entries:
         if abl.name in EXCLUDE or not abl.hitdetails:

@@ -1,6 +1,3 @@
-movable*
-*.txt
-start*
 *workspace
 # Byte-compiled / optimized / DLL files
 __pycache__/

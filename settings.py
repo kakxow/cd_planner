@@ -3,19 +3,19 @@ import dotenv
 
 
 dotenv.load_dotenv()
-wcl_key = os.getenv('WCL_KEY', '')
+wcl_key = os.environ['WCL_KEY']
 
 
 class Config:
     DEBUG = False
     TESTING = False
     SEND_FILE_MAX_AGE_DEFAULT = 0
-    SECRET_KEY = os.getenv('SECRET_KEY')
+    SECRET_KEY = os.environ['SECRET_KEY']
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class Prod(Config):
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
 
 
 class Dev(Config):

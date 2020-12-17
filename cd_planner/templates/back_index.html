@@ -29,6 +29,7 @@
 </ul>
 
 
+{%- if events -%}
 <div id="boss-casts">
     <form action="" method="post">
         <div>{{boss_name}}</div>
@@ -42,6 +43,7 @@
                 From - {{action.actorName}}
             </div>
         {%- endfor -%}
-    <input type="submit">
+        <input type="submit">
     </form>
 </div>
+{%- endif -%}

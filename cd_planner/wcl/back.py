@@ -168,7 +168,7 @@ def _get_event(
     return event
 
 
-def get_layout(log_id: str, fight_id: str) -> Layout:
+def build_layout(log_id: str, fight_id: str) -> Layout:
     fight, boss_actions = get_events(log_id, fight_id)
     fight_duration = fight.end_time - fight.start_time
     layout = Layout(

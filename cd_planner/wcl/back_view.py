@@ -20,9 +20,12 @@ def back_index():
     return flask.render_template('back_index.html', zones=zones)
 
 
+@views.route('/<fight_id>')
+def ranks(fight_id: str):
     """
     Returns list of logs for given fight_id - unique encounter identifier.
     """
+    rankings = back.get_rankings(fight_id, '5')
     return flask.render_template('back_index.html', rankings=rankings)
 
 
@@ -36,6 +39,7 @@ def log(log_id: str):
 
     if flask.request.method == 'GET':
         # Show ability breakdown.
+        _layout = back.build_layout(log_id, fight_id)
         boss_name = _layout['name']
         layout_name = flask.request.args.get('name', default='', type=str)
         flask.session['_layout'] = _layout
@@ -46,7 +50,7 @@ def log(log_id: str):
             boss_name=boss_name
         )
 
-    _layout = flask.session.pop('_layout', back.get_layout(log_id, fight_id))
+    _layout = flask.session.pop('_layout', back.build_layout(log_id, fight_id))
     boss_name = _layout['name']
     form = flask.request.form.to_dict()
     layout_name = form.pop('name')

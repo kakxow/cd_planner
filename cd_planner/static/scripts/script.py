@@ -13,6 +13,7 @@ def factory_activate_abl(box):
     spec_id = div.id.lstrip('options-')
     spec = document[f'spec-{spec_id}']
     bar = [el for el in spec.children if el.id == f'abl-{ability_id}'][0]
+
     def _activate(ev):
         if bar.style.height == '0px':
             bar.style.height = ''

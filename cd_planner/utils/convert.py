@@ -4,8 +4,8 @@ import json
 from types import SimpleNamespace
 from typing import Dict, List, Union
 
-from db import BossRecord
-import data
+from cd_planner.db import BossRecord
+from . import data
 
 
 def bosses_to_dict(bosses: List[BossRecord]) -> Dict[str, List[str]]:

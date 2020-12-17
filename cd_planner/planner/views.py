@@ -1,10 +1,8 @@
 import datetime as dt
 import flask
 
-import convert
-import data
-from db import BossRecord, db, Record
-import helpers
+from cd_planner.utils import convert, data, helpers
+from cd_planner.db import BossRecord, db, Record
 
 
 views = flask.Blueprint('views', __name__)
@@ -31,10 +29,11 @@ def save_layout():
 
 
 @views.route('/')
-@views.route('/planner')
+# @views.route('/planner')
 def planner():
-    boss = BossRecord.query.first()
-    return flask.redirect(f'planner/{boss.boss_name}')
+    return flask.render_template('index.html')
+    # boss = BossRecord.query.first()
+    # return flask.redirect(f'planner/{boss.boss_name}')
 
 
 @views.route('/planner/<boss_name>/<record_name>')

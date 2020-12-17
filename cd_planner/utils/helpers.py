@@ -5,9 +5,9 @@ from typing import List
 
 import flask
 
-import convert
-from db import BossRecord, db
-from const import DEFAULT_LAYOUT
+from . import convert
+from cd_planner.db import BossRecord, db
+from .const import DEFAULT_LAYOUT
 
 
 def boss_from_name(

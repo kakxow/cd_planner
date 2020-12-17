@@ -1,0 +1,95 @@
+{
+      "serverID": 251,
+      "serverName": "Al'Akir",
+      "regionName": "EU",
+      "duration": 460929,
+      "startTime": 1563742300727,
+      "reportStart": 1563727912761,
+      "damageTaken": 134008489,
+      "deaths": 10,
+      "fightID": 27,
+      "reportID": "ArnTLxtRp76a4mcD",
+      "exploit": 0,
+      "tanks": 2,
+      "healers": 4,
+      "melee": 3,
+      "ranged": 11,
+      "guildFaction": 1,
+      "guildName": "Halcyon",
+      "guildID": null,
+      "killTime": 1563742300727,
+      "fromlog": 1,
+      "bracket": 429.95,
+      "verified": 1,
+      "locked": 1
+    },
+
+{
+      "id": 7,
+      "start_time": 2148283,
+      "end_time": 2730942,
+      "boss": 2273,
+      "name": "Uu'nat, Harbinger of the Void",
+      "size": 20,
+      "difficulty": 5,
+      "kill": true,
+      "partial": 3,
+      "bossPercentage": 0,
+      "fightPercentage": 0,
+      "lastPhaseForPercentageDisplay": 5,
+      "maps": [
+        1346
+      ]
+    },
+
+
+{
+      "name": "Fel Rush",
+      "guid": 192611,
+      "actor": 22,
+      "type": 127,
+      "actorName": "Vhalor",
+      "actorIcon": "DemonHunter",
+      "actorType": "DemonHunter",
+      "total": 3983,
+      "abilityIcon": "spell_fire_burningspeed.jpg",
+      "overheal": 1159,
+      "uses": 14,
+      "hitCount": 1,
+      "tickCount": 0,
+      "tickMissCount": 0,
+      "missCount": 0,
+      "multistrikeHitCount": 0,
+      "multistrikeTickCount": 0,
+      "multistrikeMissCount": 0,
+      "multistrikeTickMissCount": 0,
+      "critHitCount": 0,
+      "critTickCount": 0,
+      "sources": [
+        {
+          "name": "Vhalor",
+          "total": 3983,
+          "type": "DemonHunter"
+        }
+      ],
+      "targets": [
+        {
+          "name": "Deswind",
+          "total": 3983,
+          "type": "Warrior"
+        }
+      ],
+      "hitdetails": [
+        {
+          "type": "Hit",
+          "total": 3983,
+          "count": 1,
+          "absorbOrOverheal": 0,
+          "min": 3983,
+          "max": 3983
+        }
+      ],
+      "multistrikedetails": [],
+      "missdetails": [],
+      "multistrikemissdetails": []
+    },

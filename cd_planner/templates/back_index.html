@@ -1,0 +1,47 @@
+<head>
+	<title>Log Selector</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <script>const whTooltips = {colorLinks: true, iconizeLinks: true, renameLinks: true};</script>
+	<script src="https://wow.zamimg.com/widgets/power.js"></script>
+</head>
+
+{%- for zone in zones -%}
+    <details class="zone">
+        <summary>{{zone.name}} {{zone.id}}</summary>
+        <ul>
+            {%- for enc in zone.encounters -%}
+                <li><a href="{{enc.id}}">{{enc.name}}</a></li>
+            {%- endfor -%}
+        </ul>
+    </details>
+{%- endfor -%}
+
+<ul class="rankings">
+{%- for log in rankings -%}
+    {%- if log.reportID -%}
+    {%- set name = log.guildName ~ " at " ~ log.serverName ~ " " ~ log.regionName -%}
+    <li>
+        <a href="log/{{log.reportID}}?fightID={{log.fightID}}&name={{name}}">{{name}}</a>
+        {{log.tanks}}-{{log.healers}}-{{log.melee}}-{{log.ranged}}
+    </li>
+    {%- endif -%}
+{%- endfor -%}
+</ul>
+
+
+<div id="boss-casts">
+    <form action="" method="post">
+        <div>{{boss_name}}</div>
+        <label for="name">Enter a name</label>
+        <input type="text" name="name" id="name" value="{{record_name}}">
+        {%- for action in events -%}
+            <div>
+                <input type="checkbox" id="{{action.name}}" name="{{action.name}}" value="{{action.name}}" checked>
+                <label for="{{action.name}}"><a href="https://www.wowhead.com/spell={{action.guid}}">{{action.name}}</a></label>
+                Total damage - {{"{:,}".format(action.total)}}
+                From - {{action.actorName}}
+            </div>
+        {%- endfor -%}
+    <input type="submit">
+    </form>
+</div>

@@ -1,0 +1,23 @@
+/back/
+    Render an editable preview and allow to save with desired name
+        BossRecord(boss_name, layout_name, layout)
+    Questionable: Select several logs or saved layouts and make averaged version.
+/serialize
+    Get rid of phases OR find a way to get them from WCL.
+/macro
+    SOLVED: Enhance dropdown menu for bosses: Select a boss, then select a name.
+/save_layout
+    SOLVED: may be some obscure shit besides unique constraint (use merge).
+
+add EDIT for BOSS LAYOUTS FUCK!!
+rebase complete layout on another boss action layoout for the same boss
+right-click menu on a player to customize instead of section below the timeline
+    hide and delete
+add drag and drop reordering for players
+make adding more players via big PLUS button below
+show hidden button somewhere?
+Make left-side (Players' names, boss action names) sticky
+Make more space for boss name and buttons (lock, edit, rebase)
+
+Add wowhead tooltips and icons for boss actions ^^
+add wowhead tooltips and icons for player actions ^^

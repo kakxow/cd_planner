@@ -1,13 +1,14 @@
 import flask
-import db
-import back_view
-import views
+
+from . import db
+from .wcl import back_view
+from .planner import views
 
 
 def create_app(conf: str):
     # conf in Prod, Dev, Test
     app = flask.Flask(__name__, static_url_path='')
-    app.config.from_object(f'settings.{conf}')
+    app.config.from_object(f'config.{conf}')
 
     db.db.init_app(app)
 

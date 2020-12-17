@@ -6,8 +6,8 @@ from typing import List, Tuple, TypedDict
 
 import requests
 
-import convert
-from settings import wcl_key
+from cd_planner.utils import convert
+from config import wcl_key
 
 
 MYTHIC_DIFFICULTY = 5
@@ -22,6 +22,9 @@ EXCLUDE = [
 
 class Event(TypedDict):
     name: str
+    guid: int
+    total: int
+    actorName: str
     color: str
     casts: List[str]
 
@@ -100,7 +103,8 @@ def get_damage_taken(log_id: str, fight_id: str) -> Tuple[Fight, Abilities]:
     }
     response = requests.get(url_tables, params)  # type: ignore
     if response.status_code != 200:
-        raise RuntimeError(f'Bad response from WCL when requesting damage taken. {response.status_code} {response.text}')
+        msg = f'Bad response from WCL when requesting damage taken. {response.status_code} {response.text}'
+        raise RuntimeError(msg)
     data = convert.json_to_sns(response.text, 'str')
     for abl in data.entries:
         if abl.name in EXCLUDE or not abl.hitdetails:
@@ -109,6 +113,7 @@ def get_damage_taken(log_id: str, fight_id: str) -> Tuple[Fight, Abilities]:
             name=abl.name,
             guid=abl.guid,
             damage=abl.total,
+            actorName=abl.sources[0].name,
             hit=abl.hitdetails[0].max
         )
         abilities.append(ability)
@@ -147,6 +152,9 @@ def _get_event(
     casts.sort()
     event = Event(
             name=abl.name,
+            guid=abl.guid,
+            total=abl.damage,
+            actorName=abl.actorName,
             color='rgb(245, 140, 186)',
             casts=casts
     )

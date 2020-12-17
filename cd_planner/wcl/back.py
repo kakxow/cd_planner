@@ -143,12 +143,19 @@ def _get_event(
     url_events: str,
     abl: SimpleNamespace
 ) -> Event:
+    casts: List[str] = []
     p = {**params, 'abilityid': abl.guid}
     # p.update({'abilityid': abl.guid})
-    response = requests.get(url_events, p)  # type: ignore
-    data = convert.json_to_sns(response.text, 'str')
-    casts_ms = {event.timestamp-start_time for event in data.events}
-    casts = list({convert.ms_to_str(cast) for cast in casts_ms})
+    while True:
+        response = requests.get(url_events, p)  # type: ignore
+        data = convert.json_to_sns(response.text, 'str')
+        casts_ms = {event.timestamp-start_time for event in data.events}
+        casts.extend(list({convert.ms_to_str(cast) for cast in casts_ms}))
+        next_ts = getattr(data, 'nextPageTimestamp', None)
+        if not next_ts:
+            break
+        p.update({'start': next_ts})
+
     casts.sort()
     event = Event(
             name=abl.name,

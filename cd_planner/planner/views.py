@@ -38,6 +38,7 @@ def planner():
 
 @views.route('/planner/<boss_name>/<record_name>')
 def load_boss(boss_name: str, record_name: str):
+    # Loads boss from log selector.
     print(record_name)
     boss = BossRecord.query.filter_by(
         boss_name=boss_name,

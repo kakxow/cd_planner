@@ -13,23 +13,29 @@ views = flask.Blueprint('back_views', __name__, url_prefix='/back')
 
 @views.route('/')
 def back_index():
+    """
+    Returns zone list.
+    """
     zones = back.get_zones()
     return flask.render_template('back_index.html', zones=zones)
 
 
-@views.route('/<id>')
-def ranks(id: str):
-    rankings = back.get_rankings(id, '5')
+    """
+    Returns list of logs for given fight_id - unique encounter identifier.
+    """
     return flask.render_template('back_index.html', rankings=rankings)
 
 
 @views.route('/log/<log_id>', methods=['GET', 'POST'])
 def log(log_id: str):
+    """
+    Renders a planner layout for given log and fight IDs.
+    """
     fight_id = flask.request.args.get('fightID', default='', type=str)
     _layout: back.Layout
 
     if flask.request.method == 'GET':
-        _layout = back.get_layout(log_id, fight_id)
+        # Show ability breakdown.
         boss_name = _layout['name']
         layout_name = flask.request.args.get('name', default='', type=str)
         flask.session['_layout'] = _layout

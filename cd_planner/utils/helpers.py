@@ -1,5 +1,5 @@
-import base64
 import copy
+import hashlib
 from types import SimpleNamespace
 from typing import List
 
@@ -19,9 +19,9 @@ def boss_from_name(
 
 
 def create_hash(d: str) -> str:
-    raw_hash = str(abs(hash(d)))
-    bytes_hash = bytes([int(x) for x in raw_hash])
-    return base64.b64encode(bytes_hash).decode()
+    hash_object = hashlib.sha1(bytes(d, 'utf-8'))
+    hash_ = hash_object.hexdigest()
+    return hash_
 
 
 def default_data() -> SimpleNamespace:

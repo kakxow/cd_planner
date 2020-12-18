@@ -60,7 +60,7 @@ def enhance_data(d: SimpleNamespace) -> SimpleNamespace:
                 ability_obj = data.abilities_dict[ability.name]
                 for arg, val in vars(ability_obj).items():
                     setattr(ability, arg, val)
-                ability.casts = [time_to_px(cast) for cast in ability.casts]
+                ability.casts_px = [time_to_px(cast) for cast in ability.casts]
     return new_obj
 
 

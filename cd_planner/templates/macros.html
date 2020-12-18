@@ -21,12 +21,12 @@
 							<div id="abl-{{abl_id}}" class="tooltip abl-bar" style="height: 0px; visibility: hidden;">
 						{%- endif -%}
 							<button id="btn-{{abl_id}}" class="btn-add">+</button>
-						{%- for pos in ability.casts -%}
+						{%- for pos, time in zip(ability.casts_px, ability.casts) -%}
 							{%- set left = pos + start_pos -%}
 							{%- set right = pos + ability.cool_down + start_pos -%}
 							{%- set cd_len = ability.cool_down - ability.duration -%}
 							<div id="abl-bar-{{abl_id}}" class="ability-bar higher20" style="left: {{left}}px; right: {{right}}px; width: {{ability.cool_down}}px;" >
-								<span class="tooltiptext">0:00</span>
+								<span class="tooltiptext">{{time}}</span>
 								<table class="ability-tbl">
 									<tbody>
 										<tr>
@@ -56,9 +56,10 @@
 		{%- for element in data.layout -%}
 			{%- set spec = element.spec -%}
 			{%- set name = spec.name -%}
+			{%- set visible_players = element.players|selectattr("is_visible")|list -%}
 			<div class="child options-{{name}}" id="options-{{name}}" style="background-color: {{spec.color_cd}};">
 				<label>{{name}}</label>
-				<input id="count-{{name}}" class="spec-inp" type="text" value={{(element.players)|length}} size=1>
+				<input id="count-{{name}}" class="spec-inp" type="text" value={{(visible_players)|length}} size=1>
 				<br>
 				{%- for player in element.players -%}
 					{%- set spec_id = name ~ loop.index0 -%}
@@ -69,7 +70,7 @@
 						<div id="options-{{spec_id}}" style="height: 0px; visibility: hidden;">
 					{%- endif -%}
 						<input id="box-{{spec_id}}" class="spec-checkbox" type="checkbox" checked>
-						<label for="box-{{spec_id}}"><b id="lbl-{{spec_id}}">{{name}}</b></label>
+						<label for="box-{{spec_id}}"><b id="lbl-{{spec_id}}">{{player.nick}}</b></label>
 						<br>
 						{%- for ability in player.abilities -%}
 							{%- set name = ability.name -%}

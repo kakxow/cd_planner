@@ -21,7 +21,7 @@ def boss_from_name(
 def create_hash(d: str) -> str:
     hash_object = hashlib.sha1(bytes(d, 'utf-8'))
     hash_ = hash_object.hexdigest()
-    return hash_
+    return hash_[-7:]
 
 
 def default_data() -> SimpleNamespace:

@@ -392,7 +392,7 @@ def casts_serialize():
                 tooltip = cast.select('.tooltiptext')[0]
             except IndexError:
                 link = cast
-                action.guid = link.href.split('=')[1]
+                action['guid'] = link.href.split('=')[1]
                 continue
             text = tooltip.textContent.strip()
             time = text.split(' at')[1]
@@ -438,12 +438,15 @@ def layout_serialize():
 def serialize(ev):
     seconds = (len(document.select('.timeline-ruler-tick')) /
                len(document.select('.timeline-ruler')))
+    log_link_element = document['log_url']
+
     res = {
         'encounter': {
             'seconds': seconds,
-            'name': document['boss-select'].selectedOptions[0].text,
+            'boss_name': log_link_element.text,
             # 'phases': phase_serialize(),
-            'boss_actions': casts_serialize()
+            'boss_actions': casts_serialize(),
+            'log_url': log_link_element.href
         },
         'layout': layout_serialize()
     }

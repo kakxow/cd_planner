@@ -50,7 +50,7 @@ def load_boss(boss_name: str, record_name: str):
     return flask.render_template(
         'render_from_json.html',
         bosses=boss_dict,
-        boss=boss,
+        boss=good_d.encounter,
         start_pos=data.START_POS,
         scale=data.SCALE,
         data=good_d
@@ -99,7 +99,7 @@ def load(hsh: str):
     return flask.render_template(
         'render_from_json.html',
         bosses=boss_dict,
-        boss=d.encounter.name,
+        boss=good_d.encounter,
         start_pos=data.START_POS,
         scale=data.SCALE,
         data=good_d

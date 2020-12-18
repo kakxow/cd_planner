@@ -40,7 +40,7 @@ def log(log_id: str):
     if flask.request.method == 'GET':
         # Show ability breakdown.
         _layout = back.build_layout(log_id, fight_id)
-        boss_name = _layout['name']
+        boss_name = _layout['boss_name']
         layout_name = flask.request.args.get('name', default='', type=str)
         flask.session['_layout'] = _layout
         return flask.render_template(
@@ -52,7 +52,7 @@ def log(log_id: str):
         )
 
     _layout = flask.session.pop('_layout', back.build_layout(log_id, fight_id))
-    boss_name = _layout['name']
+    boss_name = _layout['boss_name']
     form = flask.request.form.to_dict()
     layout_name = form.pop('name')
     include = form.values()

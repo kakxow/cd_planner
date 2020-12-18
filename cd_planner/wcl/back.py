@@ -36,7 +36,7 @@ Events = List[Event]
 
 class Layout(TypedDict):
     seconds: int
-    name: str
+    boss_name: str
     phases: list
     boss_actions: Events
     log_url: str
@@ -174,7 +174,7 @@ def build_layout(log_id: str, fight_id: str) -> Layout:
     fight_duration = fight.end_time - fight.start_time
     layout = Layout(
         seconds=fight_duration // 1000,
-        name=fight.name,
+        boss_name=fight.name,
         phases=[],
         boss_actions=boss_actions,
         log_url=f"https://www.warcraftlogs.com/reports/{log_id}#fight={fight_id}&type=damage-taken&by=ability"

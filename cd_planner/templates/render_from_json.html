@@ -14,7 +14,7 @@
 	<script type="text/python" src="{{ url_for('static', filename='scripts/script.py') }}"></script>
 	<p>
 		<a href="/back/">log selector</a>
-		<a href="{{boss.log_url}}"">{{boss.boss_name}}</a>
+		<a id="log_url" href="{{boss.log_url}}">{{boss.boss_name}}</a>
 		<select id="boss-select" class="boss-select" onchange="location = this.value;">
 			{%- for boss_name, records in bosses.items() -%}
 				<optgroup label="{{boss_name}}">

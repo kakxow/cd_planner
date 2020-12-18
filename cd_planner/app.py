@@ -9,6 +9,7 @@ def create_app(conf: str):
     # conf in Prod, Dev, Test
     app = flask.Flask(__name__, static_url_path='')
     app.config.from_object(f'config.{conf}')
+    app.jinja_env.globals.update(zip=zip)
 
     db.db.init_app(app)
 

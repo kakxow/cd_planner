@@ -3,7 +3,7 @@ from types import MethodType
 
 from browser import document, html, ajax, window  # type: ignore
 
-import data
+import data  # type: ignore
 from data import START_POS, SCALE, PIXELS, Ability, abilities
 
 
@@ -454,7 +454,6 @@ def send(d: dict):
     req.open('POST', '/save_layout')
     req.set_header('content-type', 'application/json')
     _data = json.dumps(d)
-    print(_data)
     req.send(_data)
     req.bind('complete', show_msg)
 
@@ -477,11 +476,9 @@ def modal_and_save():
     btn.bind('click', serialize)
     document <= btn
 
-    # modal = document['modal']
     span = document['close-modal']
     span.bind('click', close_modal)
     window.bind('keydown', esc_close_modal)
-    # window.bind('click', close_modal)
 
 
 def esc_close_modal(ev):

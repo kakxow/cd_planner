@@ -381,12 +381,18 @@ def casts_serialize():
     boss_actions = document['boss-casts']
     for action_div in boss_actions.children:
         action = dict(
+            guid='',
             name=action_div.text.strip(),
             color=action_div.children[0].style['background-color'],
             casts=[]
         )
         for cast in action_div.children:
-            tooltip = cast.select('.tooltiptext')[0]
+            try:
+                tooltip = cast.select('.tooltiptext')[0]
+            except IndexError:
+                link = cast
+                action.guid = link.href.split('=')[1]
+                continue
             text = tooltip.textContent.strip()
             time = text.split(' at')[1]
             action['casts'].append(time)

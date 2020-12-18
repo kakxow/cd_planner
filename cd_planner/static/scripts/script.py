@@ -464,7 +464,8 @@ def show_msg(req):
     p = document['modal-content']
 
     if req.status == 200:
-        msg = f'{window.location.hostname}/{req.text}'
+        msg = f'{window.location.hostname}/planner/{req.text}'
+        window.history.pushState({'page': 1}, '', f'/planner/{req.text}')
 
     else:
         msg = f'Error {req.status}'
@@ -529,4 +530,4 @@ if __name__ == '__main__':
     nicknames_inputs()
     enable()
     modal_and_save()
-    lock_unlock()
+    # lock_unlock()

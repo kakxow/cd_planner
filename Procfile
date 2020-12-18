@@ -1,1 +1,1 @@
-web: gunicorn "app:create_app('Prod')"
+web: gunicorn "cd_planner.app:create_app('Prod')"

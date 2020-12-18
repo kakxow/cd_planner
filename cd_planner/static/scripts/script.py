@@ -351,6 +351,7 @@ class SpecOpts(html.DIV):
             self <= inp
             self <= lbl
             self <= html.BR()
+        self <= html.HR()
 
 
 def phase_serialize():

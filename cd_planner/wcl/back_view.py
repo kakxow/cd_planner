@@ -47,7 +47,8 @@ def log(log_id: str):
             'back_index.html',
             record_name=layout_name,
             events=_layout['boss_actions'],
-            boss_name=boss_name
+            boss_name=boss_name,
+            log_url=_layout['log_url']
         )
 
     _layout = flask.session.pop('_layout', back.build_layout(log_id, fight_id))

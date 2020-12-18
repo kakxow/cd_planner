@@ -50,7 +50,7 @@ def load_boss(boss_name: str, record_name: str):
     return flask.render_template(
         'render_from_json.html',
         bosses=boss_dict,
-        boss=boss.record_name,
+        boss=boss
         start_pos=data.START_POS,
         scale=data.SCALE,
         data=good_d
@@ -96,6 +96,7 @@ def load(hsh: str):
 
     d = convert.json_to_sns(player_layout, 'str')
     good_d = convert.enhance_data(d)
+    breakpoint()
     return flask.render_template(
         'render_from_json.html',
         bosses=boss_dict,

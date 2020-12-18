@@ -32,7 +32,7 @@
 {%- if events -%}
 <div id="boss-casts">
     <form action="" method="post">
-        <div>{{boss_name}}</div>
+        <div><a href={{log_url}}>{{boss_name}}</a></div>
         <label for="name">Enter a name</label>
         <input type="text" name="name" id="name" value="{{record_name}}">
         {%- for action in events -%}
